@@ -3,10 +3,20 @@ const crypto = require("crypto");
 const nodemailer = require("nodemailer");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
+const winston = require("winston");
+
+const logger = winston.createLogger({
+  level: "info",
+  format: winston.format.json(),
+  transports: [new winston.transports.Console()],
+});
 
 const registerUser = async (req, res) => {
   try {
     const { username, email, password } = req.body;
+
+    // Log registration attempt with user details (excluding password)
+    logger.info("User registration attempt", { username, email });
 
     // Check if the required fields are present in the request body
     if (!username || !email || !password) {
@@ -66,11 +76,13 @@ const registerUser = async (req, res) => {
     // Save the new user to the database
     await newUser.save();
 
-    sendVerificationEmail(email, emailVerificationToken);
+    // Log successful user registration with username and email
+    logger.info("User registered successfully", { username, email });
+    sendVerificationEmail(email, emailVerificationToken, logger);
 
     res.status(201).json({ username: newUser.username, email: newUser.email });
   } catch (err) {
-    console.error(err);
+    logger.error("Error registering user", err);
     res.status(500).send({ message: "Internal server error" });
   }
 };
@@ -78,6 +90,8 @@ const registerUser = async (req, res) => {
 const verifyUserEmail = async (req, res) => {
   try {
     const { token } = req.query;
+
+    logger.info("Verifying email with token", { token });
 
     // Check if verification token is provided
     if (!token) {
@@ -102,10 +116,12 @@ const verifyUserEmail = async (req, res) => {
     user.emailVerificationToken = null;
     await user.save();
 
+    logger.info("Email verification successful", { email: user.email });
+
     // Send success response
     res.status(200).json({ message: "Email verification successful" });
   } catch (err) {
-    console.error(err);
+    logger.error("Error verifying email", err);
     res.status(500).json({ message: "Internal server error" });
   }
 };
@@ -113,12 +129,19 @@ const verifyUserEmail = async (req, res) => {
 const forgotPassword = async (req, res) => {
   try {
     const { email } = req.body;
+
+    // Log request to reset password for email
+    logger.info("Request to reset password for email:", { email });
+
     if (!email) {
       return res.status(400).json({ message: "Missing email" });
     }
 
     const user = await User.findOne({ email });
     if (!user) {
+      logger.info("User not found for password reset request", {
+        email: "[REDACTED]",
+      });
       return res.status(400).json({ message: "User not found" });
     }
 
@@ -130,13 +153,13 @@ const forgotPassword = async (req, res) => {
 
     await user.save();
 
-    sendResetPasswordEmail(email, resetToken);
+    sendResetPasswordEmail(email, resetToken, logger);
 
     res
       .status(200)
       .json({ message: "Password reset instructions sent to your email" });
   } catch (err) {
-    console.log(err);
+    logger.error("Error requesting password reset", err);
     res.status(500).json({ message: "Internal server error" });
   }
 };
@@ -144,6 +167,9 @@ const forgotPassword = async (req, res) => {
 const resetPassword = async (req, res) => {
   try {
     const { token, password } = req.body;
+
+    // Log attempt to reset password with token
+    logger.info("Attempt to reset password with token:", { token });
 
     if (!token || !password) {
       return res.status(400).json({ message: "Missing Credentials" });
@@ -165,6 +191,8 @@ const resetPassword = async (req, res) => {
       resetPasswordTokenExpiration: { $gt: Date.now() },
     });
     if (!user) {
+      // Log attempt with invalid/expired token without revealing email
+      logger.info("Invalid or expired reset token used for password reset");
       return res
         .status(400)
         .json({ message: "Invalid or expired reset token" });
@@ -175,10 +203,10 @@ const resetPassword = async (req, res) => {
     user.resetPasswordTokenExpiration = null;
     await user.save();
 
-    console.log("Password reset successful for", user.email);
+    logger.info("Password reset successful for user", { userId: user._id });
     res.status(200).json({ message: "Password reset successful" });
   } catch (err) {
-    console.error(err);
+    logger.error("Error resetting password", err);
     res.status(500).json({ message: "Internal server error" });
   }
 };
@@ -187,6 +215,8 @@ const logInUser = async (req, res) => {
   try {
     const { email, password } = req.body;
 
+    // Log login attempt with email (avoid logging password)
+    logger.info("Login attempt with email:", { email });
     // Check for required fields
     if (!email || !password) {
       return res
@@ -213,6 +243,8 @@ const logInUser = async (req, res) => {
         .json({ success: false, message: "Invalid email or password" });
     }
 
+    logger.info("Login successful for user", { userId: user._id });
+
     // Generate JWT token (replace with your secret key and expiration time)
     const token = jwt.sign({ userId: user._id }, process.env.JWT_SECRET, {
       expiresIn: "1h",
@@ -230,23 +262,16 @@ const logInUser = async (req, res) => {
       token,
     });
   } catch (err) {
-    console.log(err);
+    logger.error("Error logging in user", err);
     res.status(500).json({ message: "Internal server error" });
   }
-};
-
-// Implement a function to compare hashed passwords (if applicable)
-const comparePassword = async (candidatePassword, hashedPassword) => {
-  const salt = await bcrypt.genSalt(10);
-  const hash = await bcrypt.hash(candidatePassword, salt);
-  return hash === hashedPassword;
 };
 
 const generateEmailVerificationToken = () => {
   return crypto.randomBytes(20).toString("hex");
 };
 
-const sendVerificationEmail = (email, token) => {
+const sendVerificationEmail = (email, token, logger) => {
   try {
     const baseUrl = "http://localhost:5000";
     const verificationUrl = `${baseUrl}/users/verify-email?token=${token}`;
@@ -302,17 +327,18 @@ const sendVerificationEmail = (email, token) => {
     };
     transporter.sendMail(mailOptions, (error, info) => {
       if (error) {
-        console.error("Error sending email:", error);
+        logger.error("Error sending email", error);
       } else {
-        console.log("Email sent:", info.response);
+        logger.info("Email sent successfully:", { response: info.response });
       }
     });
   } catch (error) {
-    return error;
+    logger.error("Error sending verification email", error);
+    throw error;
   }
 };
 
-const sendResetPasswordEmail = (email, token) => {
+const sendResetPasswordEmail = (email, token, logger) => {
   try {
     const baseUrl = "http://localhost:5000";
     const resetUrl = `${baseUrl}/users/reset-password?token=${token}`;
@@ -370,13 +396,16 @@ const sendResetPasswordEmail = (email, token) => {
 
     transporter.sendMail(mailOptions, (error, info) => {
       if (error) {
-        console.error("Error sending email:", error);
+        logger.error("Error sending password reset email", error);
       } else {
-        console.log("Password reset email sent:", info.response);
+        logger.info("Password reset email sent successfully:", {
+          response: info.response,
+        });
       }
     });
   } catch (error) {
-    return error; // Handle error appropriately (e.g., log and return error message)
+    logger.error("Error sending password reset email", error);
+    throw error;
   }
 };
 
