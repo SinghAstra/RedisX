@@ -35,16 +35,4 @@ userSchema.pre("save", async function (next) {
   next();
 });
 
-userSchema.methods.generateVerificationToken = function () {
-  // Implement your logic to generate a unique verification token
-  // This could involve random strings, cryptographic methods, etc.
-  const token = "your_verification_token_generation_logic";
-  return token;
-};
-
-// Custom method to compare hashed password
-userSchema.methods.comparePassword = async function (password) {
-  return await bcrypt.compare(password, this.password);
-};
-
 module.exports = mongoose.model("User", userSchema);

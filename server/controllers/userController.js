@@ -1,6 +1,8 @@
 const User = require("../models/User");
 const crypto = require("crypto");
 const nodemailer = require("nodemailer");
+const bcrypt = require("bcrypt");
+const jwt = require("jsonwebtoken");
 
 const registerUser = async (req, res) => {
   try {
@@ -181,6 +183,65 @@ const resetPassword = async (req, res) => {
   }
 };
 
+const logInUser = async (req, res) => {
+  try {
+    const { email, password } = req.body;
+
+    // Check for required fields
+    if (!email || !password) {
+      return res
+        .status(400)
+        .json({ success: false, message: "Missing required fields." });
+    }
+
+    // Find user by email
+    const user = await User.findOne({ email });
+
+    // Check if user exists
+    if (!user) {
+      return res
+        .status(401)
+        .json({ success: false, message: "Invalid email or password" });
+    }
+
+    const validPassword = bcrypt.compare(password, user.password);
+
+    // Check password validity
+    if (!validPassword) {
+      return res
+        .status(401)
+        .json({ success: false, message: "Invalid email or password" });
+    }
+
+    // Generate JWT token (replace with your secret key and expiration time)
+    const token = jwt.sign({ userId: user._id }, process.env.JWT_SECRET, {
+      expiresIn: "1h",
+    });
+
+    // Respond with user information and token (exclude sensitive data)
+    res.status(200).json({
+      success: true,
+      message: "LogIn successful",
+      user: {
+        id: user._id,
+        username: user.username,
+        email: user.email,
+      },
+      token,
+    });
+  } catch (err) {
+    console.log(err);
+    res.status(500).json({ message: "Internal server error" });
+  }
+};
+
+// Implement a function to compare hashed passwords (if applicable)
+const comparePassword = async (candidatePassword, hashedPassword) => {
+  const salt = await bcrypt.genSalt(10);
+  const hash = await bcrypt.hash(candidatePassword, salt);
+  return hash === hashedPassword;
+};
+
 const generateEmailVerificationToken = () => {
   return crypto.randomBytes(20).toString("hex");
 };
@@ -324,4 +385,5 @@ module.exports = {
   verifyUserEmail,
   forgotPassword,
   resetPassword,
+  logInUser,
 };
