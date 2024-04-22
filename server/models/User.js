@@ -20,10 +20,10 @@ const userSchema = new mongoose.Schema({
     type: Boolean,
     default: false,
   },
-  verificationToken: String,
-  verificationTokenExpiration: Date,
-  resetToken: String,
-  resetTokenExpiration: Date,
+  emailVerificationToken: String,
+  emailVerificationTokenExpiration: Date,
+  resetPasswordToken: String,
+  resetPasswordTokenExpiration: Date,
 });
 
 userSchema.pre("save", async function (next) {

@@ -5,6 +5,7 @@ const cors = require("cors");
 const User = require("./models/User");
 const app = express();
 const userRoutes = require("./routes/userRoutes");
+const { sendVerificationEmail } = require("./controllers/userController");
 require("dotenv").config();
 
 mongoose

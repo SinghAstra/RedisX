@@ -49,7 +49,7 @@ const registerUser = async (req, res) => {
     }
 
     // Generate a verification token
-    const verificationToken = generateVerificationToken();
+    const emailVerificationToken = generateEmailVerificationToken();
 
     // Create a new User instance using the User model
     const newUser = new User({
@@ -57,14 +57,14 @@ const registerUser = async (req, res) => {
       email: req.body.email,
       password: req.body.password,
       verified: false,
-      verificationToken,
-      verificationTokenExpiration: Date.now() + 24 * 60 * 60 * 1000,
+      emailVerificationToken,
+      emailVerificationTokenExpiration: Date.now() + 24 * 60 * 60 * 1000,
     });
 
     // Save the new user to the database
     await newUser.save();
 
-    sendVerificationEmail(email, verificationToken);
+    sendVerificationEmail(email, emailVerificationToken);
 
     res.status(201).json({ username: newUser.username, email: newUser.email });
   } catch (err) {
@@ -83,13 +83,13 @@ const verifyUserEmail = async (req, res) => {
     }
 
     // Find user by verification token
-    const user = await User.findOne({ verificationToken: token });
+    const user = await User.findOne({ emailVerificationToken: token });
 
     // Check if user is found and token is valid
     if (
       !user ||
-      user.verificationToken !== token ||
-      isTokenExpired(user.verificationTokenExpiration)
+      user.emailVerificationToken !== token ||
+      isTokenExpired(user.emailVerificationTokenExpiration)
     ) {
       return res
         .status(400)
@@ -98,7 +98,7 @@ const verifyUserEmail = async (req, res) => {
 
     // Update user's verified flag to true
     user.verified = true;
-    user.verificationToken = null;
+    user.emailVerificationToken = null;
     await user.save();
 
     // Send success response
@@ -109,7 +109,7 @@ const verifyUserEmail = async (req, res) => {
   }
 };
 
-const generateVerificationToken = () => {
+const generateEmailVerificationToken = () => {
   return crypto.randomBytes(20).toString("hex");
 };
 
@@ -134,8 +134,38 @@ const sendVerificationEmail = async (email, token) => {
       to: email,
       subject: "Email Verification",
       html: `
-          <p>Please click on the link below to verify your email address:</p>
-          <a href="${verificationUrl}">Verify Email</a>
+      <head>
+        <style>
+          .container {
+            font-family: monospace;
+            padding:16px;
+            background-color: black;
+            color: white;
+          }
+          .heading{
+            font-size: 32px;
+            font-weight: bold;
+            margin-bottom: 20px;
+          }
+          p{
+            font-size: 16px;
+          }
+          a {
+            text-decoration: none;
+            padding:8px 16px;
+            background-color: cyan;
+            margin:10px;
+          }
+        </style>
+      </head>
+      <body>
+      <div class="container">
+      <h1 class="heading">Confirm Your Email Address!</h1>
+      <p>Tap the button below to confirm your email address. If you didn't create an account with Web Auth, you can safely delete this email.</p>
+      <a href="${verificationUrl}">Verify Your Email</a>
+      <p>This link will expire in 24 hours. If you don't verify your email within 24 hours, you'll need to request a new verification link.</p>
+      </div>
+      </body>
         `,
     };
     await transporter.sendMail(mailOptions, (error, info) => {
@@ -157,4 +187,5 @@ const isTokenExpired = (expirationTime) => {
 module.exports = {
   registerUser,
   verifyUserEmail,
+  sendVerificationEmail,
 };
