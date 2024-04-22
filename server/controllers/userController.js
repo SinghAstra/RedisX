@@ -1,4 +1,6 @@
 const User = require("../models/User");
+const crypto = require("crypto");
+const nodemailer = require("nodemailer");
 
 const registerUser = async (req, res) => {
   try {
@@ -46,20 +48,68 @@ const registerUser = async (req, res) => {
       });
     }
 
+    // Generate a verification token
+    const verificationToken = generateVerificationToken();
+
     // Create a new User instance using the User model
     const newUser = new User({
       username: req.body.username,
       email: req.body.email,
       password: req.body.password,
+      verified: false,
+      verificationToken,
     });
 
     // Save the new user to the database
     await newUser.save();
 
+    sendVerificationEmail(email, verificationToken);
+
     res.status(201).json({ username: newUser.username, email: newUser.email });
   } catch (err) {
     console.error(err);
     res.status(500).send({ message: "Internal server error" });
+  }
+};
+
+const generateVerificationToken = () => {
+  return crypto.randomBytes(20).toString("hex");
+};
+
+// Function to send verification email
+const sendVerificationEmail = async (email, token) => {
+  try {
+    const baseUrl = "http://localhost:3000";
+    const verificationUrl = `${baseUrl}/verify-email?token=${token}`;
+    const transporter = nodemailer.createTransport({
+      service: "Gmail",
+      host: "smtp.gmail.com",
+      port: 465,
+      secure: true,
+      auth: {
+        user: process.env.user,
+        pass: process.env.pass,
+      },
+    });
+
+    const mailOptions = {
+      from: "singhisabhaypratap@gmail.com",
+      to: email,
+      subject: "Email Verification",
+      html: `
+          <p>Please click on the link below to verify your email address:</p>
+          <a href="${verificationUrl}">Verify Email</a>
+        `,
+    };
+    await transporter.sendMail(mailOptions, (error, info) => {
+      if (error) {
+        console.error("Error sending email:", error);
+      } else {
+        console.log("Email sent:", info.response);
+      }
+    });
+  } catch (error) {
+    return error;
   }
 };
 
