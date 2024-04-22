@@ -3,6 +3,7 @@ const mongoose = require("mongoose");
 const bodyParser = require("body-parser");
 const cors = require("cors");
 const userRoutes = require("./routes/userRoutes");
+const authRoutes = require("./routes/authRoutes");
 const cookieParser = require("cookie-parser");
 const verifyJWT = require("./middleware/verifyJWTMiddleware");
 const MongoStore = require("connect-mongo");
@@ -37,6 +38,7 @@ app.use(cookieParser());
 app.use(bodyParser.json());
 app.use(cors());
 app.use("/users", userRoutes);
+app.use("/auth", authRoutes);
 
 app.get("/", verifyJWT, (req, res) => {
   return res.json({ message: "Web-Auth API is running..." });
