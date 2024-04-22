@@ -250,6 +250,9 @@ const logInUser = async (req, res) => {
       expiresIn: "1h",
     });
 
+    // Set JWT as a cookie with secure and HttpOnly flags (adjust as needed)
+    res.cookie("jwt", token, { httpOnly: true, secure: false });
+
     // Respond with user information and token (exclude sensitive data)
     res.status(200).json({
       success: true,
