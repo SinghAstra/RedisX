@@ -76,6 +76,16 @@ const registerUser = async (req, res) => {
     // Save the new user to the database
     await newUser.save();
 
+    // Generate JWT token (replace with your secret key and expiration time)
+    const token = jwt.sign({ userId: user._id }, process.env.JWT_SECRET, {
+      expiresIn: "1h",
+    });
+
+    // Set JWT as a cookie with secure and HttpOnly flags (adjust as needed)
+    res.cookie("jwt", token, { httpOnly: true, secure: false });
+
+    req.session.userId = newUser._id;
+
     // Log successful user registration with username and email
     logger.info("User registered successfully", { username, email });
     sendVerificationEmail(email, emailVerificationToken, logger);
@@ -252,6 +262,8 @@ const logInUser = async (req, res) => {
 
     // Set JWT as a cookie with secure and HttpOnly flags (adjust as needed)
     res.cookie("jwt", token, { httpOnly: true, secure: false });
+
+    req.session.userId = user._id;
 
     // Respond with user information and token (exclude sensitive data)
     res.status(200).json({
