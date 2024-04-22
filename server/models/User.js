@@ -1,6 +1,5 @@
 const mongoose = require("mongoose");
-
-const bcrypt = require("bcryptjs");
+const bcrypt = require("bcrypt");
 
 const userSchema = new mongoose.Schema({
   username: {
@@ -29,13 +28,11 @@ userSchema.pre("save", async function (next) {
   if (!this.isModified("password")) {
     next();
   }
-
   const salt = await bcrypt.genSalt(10);
   this.password = await bcrypt.hash(this.password, salt);
   next();
 });
 
-// Custom method to generate a verification token
 userSchema.methods.generateVerificationToken = function () {
   // Implement your logic to generate a unique verification token
   // This could involve random strings, cryptographic methods, etc.
@@ -44,8 +41,8 @@ userSchema.methods.generateVerificationToken = function () {
 };
 
 // Custom method to compare hashed password
-userSchema.methods.comparePassword = async function (candidatePassword) {
-  return await bcrypt.compare(candidatePassword, this.password);
+userSchema.methods.comparePassword = async function (password) {
+  return await bcrypt.compare(password, this.password);
 };
 
 module.exports = mongoose.model("User", userSchema);

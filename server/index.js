@@ -8,10 +8,7 @@ const userRoutes = require("./routes/userRoutes");
 require("dotenv").config();
 
 mongoose
-  .connect(process.env.CONNECTION_URL, {
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
-  })
+  .connect(process.env.CONNECTION_URL)
   .then(() => console.log("Database connected successfully"))
   .catch((err) => console.error(err));
 
