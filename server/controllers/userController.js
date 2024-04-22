@@ -83,14 +83,13 @@ const verifyUserEmail = async (req, res) => {
     }
 
     // Find user by verification token
-    const user = await User.findOne({ emailVerificationToken: token });
+    const user = await User.findOne({
+      emailVerificationToken: token,
+      emailVerificationTokenExpiration: { $gt: Date.now() },
+    });
 
     // Check if user is found and token is valid
-    if (
-      !user ||
-      user.emailVerificationToken !== token ||
-      isTokenExpired(user.emailVerificationTokenExpiration)
-    ) {
+    if (!user || user.emailVerificationToken !== token) {
       return res
         .status(400)
         .json({ message: "Invalid or expired verification token" });
@@ -109,12 +108,84 @@ const verifyUserEmail = async (req, res) => {
   }
 };
 
+const forgotPassword = async (req, res) => {
+  try {
+    const { email } = req.body;
+    if (!email) {
+      return res.status(400).json({ message: "Missing email" });
+    }
+
+    const user = await User.findOne({ email });
+    if (!user) {
+      return res.status(400).json({ message: "User not found" });
+    }
+
+    const resetToken = crypto.randomBytes(20).toString("hex");
+    const resetExpiresAt = Date.now() + 60 * 60 * 1000; // 1 hour
+
+    user.resetPasswordToken = resetToken;
+    user.resetPasswordTokenExpiration = resetExpiresAt;
+
+    await user.save();
+
+    sendResetPasswordEmail(email, resetToken);
+
+    res
+      .status(200)
+      .json({ message: "Password reset instructions sent to your email" });
+  } catch (err) {
+    console.log(err);
+    res.status(500).json({ message: "Internal server error" });
+  }
+};
+
+const resetPassword = async (req, res) => {
+  try {
+    const { token, password } = req.body;
+
+    if (!token || !password) {
+      return res.status(400).json({ message: "Missing Credentials" });
+    }
+
+    // Check if the password is at least 8 characters long and contains special character
+    const passwordRegex =
+      /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#$%^&*]).{8,}$/;
+    if (!passwordRegex.test(password)) {
+      return res.status(400).json({
+        success: false,
+        message:
+          "Password must be at least 8 characters long and contain at least one uppercase letter, one lowercase letter, one number, and one special character",
+      });
+    }
+
+    const user = await User.findOne({
+      resetPasswordToken: token,
+      resetPasswordTokenExpiration: { $gt: Date.now() },
+    });
+    if (!user) {
+      return res
+        .status(400)
+        .json({ message: "Invalid or expired reset token" });
+    }
+
+    user.password = password;
+    user.resetPasswordToken = null;
+    user.resetPasswordTokenExpiration = null;
+    await user.save();
+
+    console.log("Password reset successful for", user.email);
+    res.status(200).json({ message: "Password reset successful" });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ message: "Internal server error" });
+  }
+};
+
 const generateEmailVerificationToken = () => {
   return crypto.randomBytes(20).toString("hex");
 };
 
-// Function to send verification email
-const sendVerificationEmail = async (email, token) => {
+const sendVerificationEmail = (email, token) => {
   try {
     const baseUrl = "http://localhost:5000";
     const verificationUrl = `${baseUrl}/users/verify-email?token=${token}`;
@@ -168,7 +239,7 @@ const sendVerificationEmail = async (email, token) => {
       </body>
         `,
     };
-    await transporter.sendMail(mailOptions, (error, info) => {
+    transporter.sendMail(mailOptions, (error, info) => {
       if (error) {
         console.error("Error sending email:", error);
       } else {
@@ -180,12 +251,77 @@ const sendVerificationEmail = async (email, token) => {
   }
 };
 
-const isTokenExpired = (expirationTime) => {
-  return Date.now() > expirationTime;
+const sendResetPasswordEmail = (email, token) => {
+  try {
+    const baseUrl = "http://localhost:5000";
+    const resetUrl = `${baseUrl}/users/reset-password?token=${token}`;
+
+    const transporter = nodemailer.createTransport({
+      service: "Gmail",
+      host: "smtp.gmail.com",
+      port: 465,
+      secure: true,
+      auth: {
+        user: process.env.user,
+        pass: process.env.pass,
+      },
+    });
+
+    const mailOptions = {
+      from: "singhisabhaypratap@gmail.com",
+      to: email,
+      subject: "Reset Your Password",
+      html: `
+        <head>
+          <style>
+            .container {
+              font-family: monospace;
+              padding: 16px;
+              background-color: black;
+              color: white;
+            }
+            .heading {
+              font-size: 32px;
+              font-weight: bold;
+              margin-bottom: 20px;
+            }
+            p {
+              font-size: 16px;
+            }
+            a {
+              text-decoration: none;
+              padding: 8px 16px;
+              background-color: cyan;
+              margin: 10px;
+            }
+          </style>
+        </head>
+        <body>
+          <div class="container">
+            <h1 class="heading">Reset Your Password</h1>
+            <p>Click the button below to reset your password for your account.</p>
+            <a href="${resetUrl}">Reset Password</a>
+            <p>This link will expire in 1 hour. If you didn't request a password reset, you can safely ignore this email.</p>
+          </div>
+        </body>
+      `,
+    };
+
+    transporter.sendMail(mailOptions, (error, info) => {
+      if (error) {
+        console.error("Error sending email:", error);
+      } else {
+        console.log("Password reset email sent:", info.response);
+      }
+    });
+  } catch (error) {
+    return error; // Handle error appropriately (e.g., log and return error message)
+  }
 };
 
 module.exports = {
   registerUser,
   verifyUserEmail,
-  sendVerificationEmail,
+  forgotPassword,
+  resetPassword,
 };
