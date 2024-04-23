@@ -37,7 +37,7 @@ const Navbar = () => {
             Sign in
           </Link>
           <Link
-            className="text-teal-950 bg-white py-2 px-4 rounded-md font-medium"
+            className="text-teal-950 bg-white py-2 px-4 rounded-md font-medium hover:opacity-80"
             to={"/register"}
           >
             Get started
