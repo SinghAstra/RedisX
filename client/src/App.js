@@ -1,8 +1,19 @@
+import { Routes, Route } from "react-router-dom";
+import Home from "./pages/Home";
+import Register from "./pages/Register";
+import LogIn from "./pages/LogIn";
+import Profile from "./pages/Profile";
+import NotFound from "./pages/NotFound";
+
 function App() {
   return (
-    <div className="bg-black text-white font-mono flex items-center justify-center h-screen">
-      <h1>Auth App</h1>
-    </div>
+    <Routes>
+      <Route path="/" element={<Home />} />
+      <Route path="/register" element={<Register />} />
+      <Route path="/log-in" element={<LogIn />} />
+      <Route path="/profile" element={<Profile />} />
+      <Route path="*" element={<NotFound />} />
+    </Routes>
   );
 }
 
