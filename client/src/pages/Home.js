@@ -8,7 +8,7 @@ const Home = () => {
     <div className="bg-teal-950 flex flex-col ">
       <Navbar />
       <div className=" w-full px-10">
-        <div className="pt-44 pb-16 ">
+        <div className="pt-44 pb-16 hero-text">
           <ReviewButton />
           <div className="flex w-full flex-col items-start gap-8">
             <h1 className="w-full text-9xl tracking-tight leading-[0.9] text-purple-300 font-medium">
