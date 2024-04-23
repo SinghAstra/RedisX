@@ -1,17 +1,31 @@
 import { Routes, Route } from "react-router-dom";
 import Home from "./pages/Home";
+import Login from "./pages/Login";
 import Register from "./pages/Register";
-import LogIn from "./pages/LogIn";
 import Profile from "./pages/Profile";
+import Verification from "./pages/Verification";
+import PasswordReset from "./pages/PasswordReset";
+import ResetNewPassword from "./pages/ResetNewPassword";
 import NotFound from "./pages/NotFound";
+import ProtectedRoute from "./utils/ProtectedRoute";
 
 function App() {
   return (
     <Routes>
       <Route path="/" element={<Home />} />
+      <Route path="/login" element={<Login />} />
       <Route path="/register" element={<Register />} />
-      <Route path="/log-in" element={<LogIn />} />
-      <Route path="/profile" element={<Profile />} />
+      <Route path="/verify-email" element={<Verification />} />
+      <Route path="/password-reset" element={<PasswordReset />} />
+      <Route path="/password-reset/:token" element={<ResetNewPassword />} />
+      <Route
+        path="/profile"
+        element={
+          <ProtectedRoute>
+            <Profile />
+          </ProtectedRoute>
+        }
+      />
       <Route path="*" element={<NotFound />} />
     </Routes>
   );
