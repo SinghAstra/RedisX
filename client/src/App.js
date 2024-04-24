@@ -10,6 +10,7 @@ import NotFound from "./pages/NotFound";
 import ProtectedRoute from "./utils/ProtectedRoute";
 import MultiColumnLayout from "./pages/Layout/MultiColumnLayout/MultiColumnLayout";
 import HolyGrailLayout from "./pages/Layout/HolyGrailLayout/HolyGrailLayout";
+import MasonryStyleLayout from "./pages/Layout/MasonryStyleLayout/MasonryStyleLayout";
 
 function App() {
   return (
@@ -33,6 +34,10 @@ function App() {
         element={<MultiColumnLayout />}
       />
       <Route path="/layout/holy-grail-layout" element={<HolyGrailLayout />} />
+      <Route
+        path="/layout/masonry-style-layout"
+        element={<MasonryStyleLayout />}
+      />
       <Route path="*" element={<NotFound />} />
     </Routes>
   );

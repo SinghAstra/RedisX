@@ -37,6 +37,12 @@ const Navbar = () => {
             >
               HGL
             </Link>
+            <Link
+              className="text-xl text-slate-400 hover:text-white"
+              to={"/layout/masonry-style-layout"}
+            >
+              MSL
+            </Link>
           </div>
         </div>
         <div className="drawer-content lg:hidden">

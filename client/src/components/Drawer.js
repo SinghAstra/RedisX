@@ -15,7 +15,12 @@ const Drawer = () => {
             <Link to="/layout/multi-column-layout">Multi Column Layout</Link>
           </li>
           <li>
-            <Link to={"/layout/holy-grail-layout"}>HGL</Link>
+            <Link to={"/layout/holy-grail-layout"}>Holy Grail Layout</Link>
+          </li>
+          <li>
+            <Link to={"/layout/masonry-style-layout"}>
+              Masonry Style Layout
+            </Link>
           </li>
         </ul>
         <div className="flex gap-2 w-full">

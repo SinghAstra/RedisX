@@ -3,7 +3,7 @@ import "./HolyGrailLayout.css";
 
 const HolyGrailLayout = () => {
   return (
-    <div className="grid-container">
+    <div className="holy-grail">
       <header>
         <h1>The Holy Grail</h1>
       </header>
