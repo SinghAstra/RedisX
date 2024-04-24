@@ -20,9 +20,16 @@ const Navbar = () => {
           isScrolled ? "bg-teal-800" : "bg-transparent"
         } transition-colors`}
       >
-        <Link className="text-xl" to={"/"}>
-          WebAuth
-        </Link>
+        <div className="flex gap-8 items-center">
+          <Link className="text-2xl" to={"/"}>
+            WebAuth
+          </Link>
+          <div className="hidden lg:flex gap-4 items-center">
+            <Link className="text-xl" to={"/layout/multi-column-layout"}>
+              MCL
+            </Link>
+          </div>
+        </div>
         <div className="drawer-content lg:hidden">
           <input id="my-drawer-4" type="checkbox" className="drawer-toggle" />
           <label

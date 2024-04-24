@@ -12,7 +12,7 @@ const Drawer = () => {
       <div className="menu p-4 w-96 min-h-full bg-base-200 text-base-content flex justify-between flex-col ">
         <ul>
           <li>
-            <a>Sidebar Item 1</a>
+            <Link to="/layout/multi-column-layout">Multi Column Layout</Link>
           </li>
           <li>
             <a>Sidebar Item 2</a>

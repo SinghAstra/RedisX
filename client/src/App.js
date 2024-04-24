@@ -8,6 +8,7 @@ import PasswordReset from "./pages/PasswordReset";
 import ResetNewPassword from "./pages/ResetNewPassword";
 import NotFound from "./pages/NotFound";
 import ProtectedRoute from "./utils/ProtectedRoute";
+import MultiColumnLayout from "./pages/Layout/MultiColumnLayout/MultiColumnLayout";
 
 function App() {
   return (
@@ -25,6 +26,10 @@ function App() {
             <Profile />
           </ProtectedRoute>
         }
+      />
+      <Route
+        path="/layout/multi-column-layout"
+        element={<MultiColumnLayout />}
       />
       <Route path="*" element={<NotFound />} />
     </Routes>
