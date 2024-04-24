@@ -9,6 +9,7 @@ import ResetNewPassword from "./pages/ResetNewPassword";
 import NotFound from "./pages/NotFound";
 import ProtectedRoute from "./utils/ProtectedRoute";
 import MultiColumnLayout from "./pages/Layout/MultiColumnLayout/MultiColumnLayout";
+import HolyGrailLayout from "./pages/Layout/HolyGrailLayout/HolyGrailLayout";
 
 function App() {
   return (
@@ -31,6 +32,7 @@ function App() {
         path="/layout/multi-column-layout"
         element={<MultiColumnLayout />}
       />
+      <Route path="/layout/holy-grail-layout" element={<HolyGrailLayout />} />
       <Route path="*" element={<NotFound />} />
     </Routes>
   );

@@ -15,7 +15,7 @@ const Drawer = () => {
             <Link to="/layout/multi-column-layout">Multi Column Layout</Link>
           </li>
           <li>
-            <a>Sidebar Item 2</a>
+            <Link to={"/layout/holy-grail-layout"}>HGL</Link>
           </li>
         </ul>
         <div className="flex gap-2 w-full">

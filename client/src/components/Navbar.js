@@ -21,12 +21,21 @@ const Navbar = () => {
         } transition-colors`}
       >
         <div className="flex gap-8 items-center">
-          <Link className="text-2xl" to={"/"}>
+          <Link className="text-2xl " to={"/"}>
             WebAuth
           </Link>
           <div className="hidden lg:flex gap-4 items-center">
-            <Link className="text-xl" to={"/layout/multi-column-layout"}>
+            <Link
+              className="text-xl text-slate-400 hover:text-white"
+              to={"/layout/multi-column-layout"}
+            >
               MCL
+            </Link>
+            <Link
+              className="text-xl text-slate-400 hover:text-white"
+              to={"/layout/holy-grail-layout"}
+            >
+              HGL
             </Link>
           </div>
         </div>
