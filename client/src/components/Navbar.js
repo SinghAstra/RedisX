@@ -43,6 +43,12 @@ const Navbar = () => {
             >
               MSL
             </Link>
+            <Link
+              className="text-xl text-slate-400 hover:text-white"
+              to={"/layout/portfolio-layout"}
+            >
+              PL
+            </Link>
           </div>
         </div>
         <div className="drawer-content lg:hidden">

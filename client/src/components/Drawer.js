@@ -22,6 +22,9 @@ const Drawer = () => {
               Masonry Style Layout
             </Link>
           </li>
+          <li>
+            <Link to={"/layout/portfolio-layout"}>Portfolio Layout</Link>
+          </li>
         </ul>
         <div className="flex gap-2 w-full">
           <Link

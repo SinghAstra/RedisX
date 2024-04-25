@@ -11,6 +11,7 @@ import ProtectedRoute from "./utils/ProtectedRoute";
 import MultiColumnLayout from "./pages/Layout/MultiColumnLayout/MultiColumnLayout";
 import HolyGrailLayout from "./pages/Layout/HolyGrailLayout/HolyGrailLayout";
 import MasonryStyleLayout from "./pages/Layout/MasonryStyleLayout/MasonryStyleLayout";
+import PortfolioLayout from "./pages/Layout/PortfolioLayout/PortfolioLayout";
 
 function App() {
   return (
@@ -38,6 +39,7 @@ function App() {
         path="/layout/masonry-style-layout"
         element={<MasonryStyleLayout />}
       />
+      <Route path="/layout/portfolio-layout" element={<PortfolioLayout />} />
       <Route path="*" element={<NotFound />} />
     </Routes>
   );
