@@ -30,37 +30,6 @@ const Home = () => {
           </div>
         </div>
       </div>
-      {/* <div className="bg-violet-400 overflow-hidden">
-        <div className="mx-auto bg-cyan-400 w-full px-5 sm:px-9 md:px-10 xl:px-12">
-          <div className="mx-auto max-w-8xl">
-            <div className="flex gap-4  overflow-x-scroll cursor-grab active:cursor-grabbing">
-              <div className="flex  h-40 flex-1 min-w-[70vw] border-y slate-border xs:min-w-[35vw] sm:min-w-[28vw] bg-yellow-400"></div>
-              <div className="flex  h-40 flex-1 min-w-[70vw] border-y slate-border xs:min-w-[35vw] sm:min-w-[28vw] bg-yellow-400"></div>
-              <div className="flex  h-40 flex-1 min-w-[70vw] border-y slate-border xs:min-w-[35vw] sm:min-w-[28vw] bg-yellow-400"></div>
-              <div className="flex  h-40 flex-1 min-w-[70vw] border-y slate-border xs:min-w-[35vw] sm:min-w-[28vw] bg-yellow-400"></div>
-              <div className="flex  h-40 flex-1 min-w-[70vw] border-y slate-border xs:min-w-[35vw] sm:min-w-[28vw] bg-yellow-400"></div>
-              <div className="flex  h-40 flex-1 min-w-[70vw] border-y slate-border xs:min-w-[35vw] sm:min-w-[28vw] bg-yellow-400"></div>
-              <div className="flex  h-40 flex-1 min-w-[70vw] border-y slate-border xs:min-w-[35vw] sm:min-w-[28vw] bg-yellow-400"></div>
-            </div>
-          </div>
-        </div>
-      </div> */}
-      {/* <div className="bg-yellow-400 flex gap-4 mt-20 overflow-x-scroll cursor-grab active:cursor-grabbing scroll">
-        <div className="min-w-96 h-40 flex-1 bg-pink-400"></div>
-        <div className="min-w-96 h-40 flex-1 bg-pink-400"></div>
-        <div className="min-w-96 h-40 flex-1 bg-pink-400"></div>
-        <div className="min-w-96 h-40 flex-1 bg-pink-400"></div>
-        <div className="min-w-96 h-40 flex-1 bg-pink-400"></div>
-        <div className="min-w-96 h-40 flex-1 bg-pink-400"></div>
-      </div> */}
-      <div className="inline-grid bg-black p-2 gap-2">
-        <div className="bg-pink-400">01</div>
-        <div className="bg-pink-400">02</div>
-        <div className="bg-pink-400">03</div>
-        <div className="bg-pink-400">04</div>
-        <div className="bg-pink-400">05</div>
-        <div className="bg-pink-400">06</div>
-      </div>
     </div>
   );
 };
