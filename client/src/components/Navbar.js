@@ -76,7 +76,7 @@ const Navbar = () => {
         <div className="lg:flex gap-4 hidden">
           <Link
             className="py-2 px-4 hover:bg-stone-700 hover:bg-opacity-50 font-medium rounded-md transition ease-in-out delay-50"
-            to={"/login"}
+            to={"/log-in"}
           >
             Sign in
           </Link>

@@ -29,7 +29,7 @@ const Drawer = () => {
         <div className="flex gap-2 w-full">
           <Link
             className="py-2 flex-1 hover:bg-stone-700 hover:bg-opacity-50 font-medium rounded-md transition ease-in-out delay-50 flex items-center justify-center"
-            to={"/login"}
+            to={"/log-in"}
           >
             Sign in
           </Link>
