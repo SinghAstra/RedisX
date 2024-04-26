@@ -166,6 +166,7 @@ const Register = () => {
                         value={values.username}
                         onChange={handleChange}
                         onBlur={handleBlur}
+                        autoComplete="off"
                       />
                       <label className="data-label text-slate-400">
                         Username
@@ -185,6 +186,7 @@ const Register = () => {
                         value={values.email}
                         onChange={handleChange}
                         onBlur={handleBlur}
+                        autoComplete="off"
                       />
                       <label className="data-label text-slate-400">Email</label>
                       {errors.email && touched.email ? (
