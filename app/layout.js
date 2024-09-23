@@ -1,7 +1,7 @@
 import "@/styles/global.css";
 
 export const metadata = {
-  title: "PromptHub",
+  title: "Prompthub",
   description: "Discover & Share AI Prompts",
 };
 
