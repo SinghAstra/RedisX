@@ -3,11 +3,13 @@ let type = document.querySelector("#type") as HTMLSelectElement;
 let toFrom = document.querySelector("#toFrom") as HTMLInputElement;
 let details = document.querySelector("#details") as HTMLInputElement;
 let amount = document.querySelector("#amount") as HTMLInputElement;
-import { HasFormat } from "./interface/HasFormat";
-import Invoice from "./models/Invoice";
-import Payment from "./models/Payment";
+import { HasFormat } from "./interface/HasFormat.js";
+import Invoice from "./models/Invoice.js";
+import { ListTemplate } from "./models/ListTemplate.js";
+import Payment from "./models/Payment.js";
 
-let docs: HasFormat[] = [];
+const ul = document.querySelector("ul")!;
+const list = new ListTemplate(ul);
 
 form.addEventListener("submit", (event) => {
   event.preventDefault();
@@ -31,6 +33,5 @@ form.addEventListener("submit", (event) => {
       parseFloat(formData.amount)
     );
   }
-  docs.push(invoiceOrPayment);
-  console.log("docs is ", docs);
+  list.render(invoiceOrPayment, type.value);
 });

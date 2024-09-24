@@ -1,14 +1,11 @@
-import { HasFormat } from "../interface/HasFormat";
+import { HasFormat } from "../interface/HasFormat.js";
 
 export default class Invoice implements HasFormat {
-  readonly client: string;
-  readonly details: string;
-  readonly amount: number;
-  constructor(client: string, details: string, amount: number) {
-    this.client = client;
-    this.details = details;
-    this.amount = amount;
-  }
+  constructor(
+    readonly client: string,
+    readonly details: string,
+    readonly amount: number
+  ) {}
   format() {
     return `Invoice of $${this.amount.toFixed(2)}  by ${this.client} for ${
       this.details

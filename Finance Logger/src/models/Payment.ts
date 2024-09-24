@@ -1,4 +1,4 @@
-import { HasFormat } from "../interface/HasFormat";
+import { HasFormat } from "../interface/HasFormat.js";
 
 export default class Payment implements HasFormat {
   readonly recipient: string;
