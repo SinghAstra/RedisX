@@ -1,0 +1,68 @@
+body {
+  margin: 0;
+  font-family: monospace;
+  background: black;
+  font-family: "Courier New", Courier, monospace;
+  color: #9c36b5;
+}
+.app-container {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+.navbar {
+  padding: 8px;
+  text-align: center;
+  text-transform: uppercase;
+  font-weight: 600;
+  letter-spacing: 1px;
+  font-size: 16px;
+}
+
+.body {
+  display: flex;
+  flex: 1;
+}
+
+.item-list-container {
+  flex: 2;
+}
+
+.new-item-form {
+  flex: 1;
+  height: fit-content;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 24px;
+  border: 2px solid hsl(300, 1%, 28%);
+  border-radius: 8px;
+  margin: 16px;
+  padding: 32px 16px;
+}
+
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  width: 80%;
+}
+
+.field label {
+  font-weight: 600;
+  font-size: 20px;
+  align-self: flex-start;
+}
+
+input,
+select {
+  padding: 8px;
+  border: 1px solid #302e2e;
+  border-radius: 6px;
+  width: 80%;
+  background: transparent;
+}
+
+input:focus {
+  outline: #9c36b5;
+}
