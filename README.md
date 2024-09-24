@@ -4,18 +4,20 @@ This repository contains my journey of learning TypeScript, documented across 20
 
 ## Table of Contents
 
-1. [Introduction to TypeScript](./sections/01-introduction.md)
-2. [Setting up a TypeScript Project](./sections/02-setup.md)
-3. [Basic Types in TypeScript](./sections/03-basic-types.md)
-4. [Type Inference and Annotations](./sections/04-type-inference.md)
-   ...
-5. [Best Practices and Common Mistakes](./sections/20-best-practices.md)
-
-## How to Use
-
-Each section contains:
-
-- A markdown document with detailed explanations.
-- Code examples located in the `examples/` directory.
+1. [Introduction to TypeScript](./01-introduction.md)
+2. [Type Basics](./02-type-basics.md)
+3. [Objects and Arrays](./03-object-and-arrays.md)
+4. [Explicit Types](./04-explicit-types.md)
+5. [Dynamic `any` Types](./05-dynamic-types.md)
+6. [Better Workflow & `tsconfig.json`](./06-better-worflow-tsconfig.md)
+7. [Functions](./07-functions.md)
+8. [Type Aliases](./08-type-aliases.md)
+9. [Function Signatures](./09-functions-signature.md)
+10. [DOM Type Casting](./10-dom-type-casting.md)
+11. [Classes](./11-class.md)
+12. [Access Modifiers](./12-access-modifiers.md)
+13. [Modules](./13-modules.md)
+14. [Interfaces](./14-interface.md)
+15. [Generics](./15-generics.md)
 
 Feel free to explore and contribute!
