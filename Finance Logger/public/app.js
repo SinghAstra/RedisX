@@ -4,6 +4,8 @@ let toFrom = document.querySelector("#toFrom");
 let details = document.querySelector("#details");
 let amount = document.querySelector("#amount");
 import Invoice from "./models/Invoice.js";
+import Payment from "./models/Payment.js";
+let docs = [];
 form.addEventListener("submit", (event) => {
   event.preventDefault();
   let formData = {
@@ -12,7 +14,20 @@ form.addEventListener("submit", (event) => {
     [details.name]: details.value,
     [amount.name]: amount.value,
   };
-  console.log("formData is ", formData);
+  let invoiceOrPayment;
+  if (type.value === "invoice") {
+    invoiceOrPayment = new Invoice(
+      formData.toFrom,
+      formData.details,
+      parseFloat(formData.amount)
+    );
+  } else {
+    invoiceOrPayment = new Payment(
+      formData.toFrom,
+      formData.details,
+      parseFloat(formData.amount)
+    );
+  }
+  docs.push(invoiceOrPayment);
+  console.log("docs is ", docs);
 });
-let invoice = new Invoice("mario", "web development", 200);
-console.log("invoice is ", invoice);

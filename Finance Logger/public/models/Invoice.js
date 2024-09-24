@@ -5,6 +5,6 @@ export default class Invoice {
         this.amount = amount;
     }
     format() {
-        return `Invoice for ${this.client}:\nDetails: ${this.details}\nAmount: $${this.amount.toFixed(2)}`;
+        return `Invoice of $${this.amount.toFixed(2)}  by ${this.client} for ${this.details}`;
     }
 }

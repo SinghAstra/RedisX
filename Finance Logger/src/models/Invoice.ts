@@ -1,15 +1,17 @@
-export default class Invoice {
-  client: string;
-  details: string;
-  amount: number;
+import { HasFormat } from "../interface/HasFormat";
+
+export default class Invoice implements HasFormat {
+  readonly client: string;
+  readonly details: string;
+  readonly amount: number;
   constructor(client: string, details: string, amount: number) {
     this.client = client;
     this.details = details;
     this.amount = amount;
   }
   format() {
-    return `Invoice for ${this.client}:\nDetails: ${
+    return `Invoice of $${this.amount.toFixed(2)}  by ${this.client} for ${
       this.details
-    }\nAmount: $${this.amount.toFixed(2)}`;
+    }`;
   }
 }

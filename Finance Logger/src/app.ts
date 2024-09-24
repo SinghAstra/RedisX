@@ -3,7 +3,11 @@ let type = document.querySelector("#type") as HTMLSelectElement;
 let toFrom = document.querySelector("#toFrom") as HTMLInputElement;
 let details = document.querySelector("#details") as HTMLInputElement;
 let amount = document.querySelector("#amount") as HTMLInputElement;
+import { HasFormat } from "./interface/HasFormat";
 import Invoice from "./models/Invoice";
+import Payment from "./models/Payment";
+
+let docs: HasFormat[] = [];
 
 form.addEventListener("submit", (event) => {
   event.preventDefault();
@@ -13,8 +17,20 @@ form.addEventListener("submit", (event) => {
     [details.name]: details.value,
     [amount.name]: amount.value,
   };
-  console.log("formData is ", formData);
+  let invoiceOrPayment: HasFormat;
+  if (type.value === "invoice") {
+    invoiceOrPayment = new Invoice(
+      formData.toFrom,
+      formData.details,
+      parseFloat(formData.amount)
+    );
+  } else {
+    invoiceOrPayment = new Payment(
+      formData.toFrom,
+      formData.details,
+      parseFloat(formData.amount)
+    );
+  }
+  docs.push(invoiceOrPayment);
+  console.log("docs is ", docs);
 });
-
-let invoice = new Invoice("mario", "web development", 200);
-console.log("invoice is ", invoice);
