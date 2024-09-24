@@ -19,27 +19,27 @@
         <form class="new-item-form">
           <div class="field">
             <label>Type:</label>
-            <select id="type">
+            <select id="type" name="type">
               <option value="invoice">Invoice</option>
               <option value="payment">Payment</option>
             </select>
           </div>
           <div class="field">
             <label>To / From:</label>
-            <input type="text" id="tofrom" />
+            <input type="text" id="toFrom" name="toFrom" />
           </div>
           <div class="field">
             <label>Details:</label>
-            <input type="date" id="details" />
+            <input type="date" id="details" name="details" />
           </div>
           <div class="field">
             <label>Amount (£):</label>
-            <input type="number" id="amount" />
+            <input type="number" id="amount" name="amount" />
           </div>
           <button>Add</button>
         </form>
       </div>
     </div>
-    <script src="script.js"></script>
+    <script src="app.js"></script>
   </body>
 </html>
