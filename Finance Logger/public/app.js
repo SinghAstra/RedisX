@@ -14,3 +14,15 @@ form.addEventListener("submit", (event) => {
     };
     console.log("formData is ", formData);
 });
+class Invoice {
+    constructor(client, details, amount) {
+        this.client = client;
+        this.details = details;
+        this.amount = amount;
+    }
+    format() {
+        return `Invoice for ${this.client}:\nDetails: ${this.details}\nAmount: $${this.amount.toFixed(2)}`;
+    }
+}
+const invOne = new Invoice("mario", "Web Development", 250);
+console.log("invOne is ", invOne);
