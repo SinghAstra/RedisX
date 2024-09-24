@@ -39,6 +39,7 @@ body {
   border-radius: 8px;
   margin: 16px;
   padding: 32px 16px;
+  background: #131212;
 }
 
 .field {
@@ -59,10 +60,52 @@ select {
   padding: 8px;
   border: 1px solid #302e2e;
   border-radius: 6px;
-  width: 80%;
+  color: wheat;
+  background: transparent;
+  transition: all 0.4s ease;
+  appearance: none;
+  font-family: inherit;
+}
+
+select {
+  letter-spacing: 2px;
+}
+
+select:focus {
+  background: #302e2e;
+  outline: none;
+}
+
+option {
+  padding: 10px;
   background: transparent;
 }
 
 input:focus {
-  outline: #9c36b5;
+  outline: none;
+  background: #302e2e;
+}
+
+.new-item-form button {
+  padding: 6px;
+  width: 80%;
+  font-size: 20px;
+  font-weight: 500;
+  background: #9c36b5;
+  outline: none;
+  cursor: pointer;
+  color: white;
+  border-radius: 8px;
+  font-family: inherit;
+  transition: all 0.4s ease;
+}
+
+button:active {
+  transform: scale(0.9);
+}
+
+@media screen and (max-width: 768px) {
+  .body {
+    flex-direction: column;
+  }
 }
