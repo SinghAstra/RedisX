@@ -3,6 +3,7 @@ let type = document.querySelector("#type") as HTMLSelectElement;
 let toFrom = document.querySelector("#toFrom") as HTMLInputElement;
 let details = document.querySelector("#details") as HTMLInputElement;
 let amount = document.querySelector("#amount") as HTMLInputElement;
+import Invoice from "./models/Invoice";
 
 form.addEventListener("submit", (event) => {
   event.preventDefault();
@@ -15,18 +16,5 @@ form.addEventListener("submit", (event) => {
   console.log("formData is ", formData);
 });
 
-class Invoice {
-  client: string;
-  details: string;
-  amount: number;
-  constructor(client: string, details: string, amount: number) {
-    this.client = client;
-    this.details = details;
-    this.amount = amount;
-  }
-  format() {
-    return `Invoice for ${this.client}:\nDetails: ${
-      this.details
-    }\nAmount: $${this.amount.toFixed(2)}`;
-  }
-}
+let invoice = new Invoice("mario", "web development", 200);
+console.log("invoice is ", invoice);
