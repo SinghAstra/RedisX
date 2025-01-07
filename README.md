@@ -1,35 +1,32 @@
-# MotionX 🚀
+# Animated Component Library
 
-Beautiful, reusable animation components built on top of shadcn/ui and Framer Motion.
+A practical learning project combining shadCn/ui components with Framer Motion animations. Built to understand animation fundamentals while creating reusable UI components.
 
-## ✨ Features
+## Why This Project?
 
-- 🎨 Built on top of shadcn/ui's beautiful components
-- 🎬 Powered by Framer Motion's animation capabilities
-- 🧱 Fully customizable and composable
-- 🎯 TypeScript support out of the box
-- 📱 Responsive and accessible by default
-- 🎮 Easy-to-use animation presets
-- 🛠️ Simple API for custom animations
+- Learn Framer Motion fundamentals through hands-on component building
+- Understand animation best practices in React applications
+- Create a reusable library of animated components based on shadCn/ui
+- Practice implementing accessible animations with reduced motion support
 
-## 🤝 Contributing
+## Core Goals
 
-We love your input! We want to make contributing to MotionX as easy as possible, whether it's:
+1. Master basic Framer Motion concepts:
 
-- Reporting a bug
-- Discussing the current state of the code
-- Submitting a fix
-- Proposing new features
+   - Animation variants
+   - Transitions and gestures
+   - Exit animations
+   - Layout animations
 
-## 🙏 Acknowledgments
+2. Build practical components:
 
-Built with:
+   - Animated buttons with meaningful feedback
+   - Smooth modal transitions
+   - Engaging loading states
+   - Interactive cards
 
-- [shadcn/ui](https://ui.shadcn.com/)
-- [Framer Motion](https://www.framer.com/motion/)
-- [TypeScript](https://www.typescriptlang.org/)
-- [Tailwind CSS](https://tailwindcss.com/)
-
-## ⭐ Show your support
-
-Give a ⭐️ if this project helped you!
+3. Focus on maintainability:
+   - Clean animation configs
+   - Reusable animation presets
+   - Well-documented components
+   - Accessibility first
