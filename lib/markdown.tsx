@@ -25,7 +25,7 @@ export const components = {
   h2: ({ className, ...props }: React.HTMLAttributes<HTMLHeadingElement>) => (
     <h2
       className={cn(
-        "font-heading text-3xl font-medium  mt-12 scroll-m-20  first:mt-0 border-b border-dashed w-fit",
+        "font-heading text-3xl font-medium  mt-12 scroll-m-20  first:mt-0 border-b-2 border-dashed w-fit",
         className
       )}
       {...props}
@@ -33,7 +33,10 @@ export const components = {
   ),
   h3: ({ className, ...props }: React.HTMLAttributes<HTMLHeadingElement>) => (
     <h3
-      className={cn("font-heading mt-6 scroll-m-20 text-lg", className)}
+      className={cn(
+        "font-heading mt-6 scroll-m-20 text-lg first:mt-0 border-b border-dashed w-fit",
+        className
+      )}
       {...props}
     />
   ),

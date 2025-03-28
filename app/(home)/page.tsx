@@ -35,7 +35,7 @@ const HomePage = () => {
             <h1 className=" text-4xl  md:text-5xl lg:text-7xl  leading-10 sm:leading-[4.5rem] text-foreground text-left sm:text-center py-6 font-bold">
               Learn Redis Concepts & <br />
               <span className="text-transparent bg-gradient-to-r from-violet-500 to-fuchsia-500 bg-clip-text inline-bloc">
-                Build Project
+                Build Projects
               </span>
             </h1>
 
@@ -109,7 +109,7 @@ const HomePage = () => {
             className="flex flex-col items-center justify-center gap-8  "
           >
             <h1 className="mt-8 text-foreground py-4  text-center text-4xl font-medium tracking-tight md:text-7xl">
-              Hands on Project <br />
+              Hands on Projects <br />
               For Learning Redis
             </h1>
             <BackgroundShine>
