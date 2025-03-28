@@ -1,12 +1,13 @@
 import type { Config } from "tailwindcss";
-import tailwindAnimate from "tailwindcss-animate";
+import tailwindCSSAnimate from "tailwindcss-animate";
 
-export default {
+const config: Config = {
   darkMode: ["class"],
   content: [
     "./pages/**/*.{js,ts,jsx,tsx,mdx}",
     "./components/**/*.{js,ts,jsx,tsx,mdx}",
     "./app/**/*.{js,ts,jsx,tsx,mdx}",
+    "./lib/**/*.{js,ts,jsx,tsx,mdx}",
   ],
   theme: {
     extend: {
@@ -51,10 +52,6 @@ export default {
           "4": "hsl(var(--chart-4))",
           "5": "hsl(var(--chart-5))",
         },
-        "stats-blue": "hsl(var(--stats-blue))",
-        "stats-purple": "hsl(var(--stats-purple))",
-        "stats-pink": "hsl(var(--stats-pink))",
-        "stats-orange": "hsl(var(--stats-orange))",
       },
       borderRadius: {
         lg: "var(--radius)",
@@ -62,15 +59,20 @@ export default {
         sm: "calc(var(--radius) - 4px)",
       },
       keyframes: {
-        "gradient-x": {
-          "0%, 100%": { "background-position": "0% center" },
-          "50%": { "background-position": "100% center" },
+        shine: {
+          from: {
+            backgroundPosition: "0 0",
+          },
+          to: {
+            backgroundPosition: "-400% 0",
+          },
         },
       },
       animation: {
-        "gradient-x": "gradient-x 5s ease infinite",
+        shine: "shine 6s linear infinite",
       },
     },
   },
-  plugins: [tailwindAnimate],
-} satisfies Config;
+  plugins: [tailwindCSSAnimate],
+};
+export default config;

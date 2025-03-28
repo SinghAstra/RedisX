@@ -1,9 +1,8 @@
-import Providers from "@/components/providers/provider";
-import { Toaster } from "@/components/ui/toaster";
 import { siteConfig } from "@/config/site";
 import type { Metadata } from "next";
 import NextTopLoader from "nextjs-toploader";
 import "./globals.css";
+import { SiteHeader } from "./site-header";
 
 export const metadata: Metadata = {
   metadataBase: new URL(siteConfig.url),
@@ -12,23 +11,7 @@ export const metadata: Metadata = {
     template: `%s | ${siteConfig.name}`,
   },
   description: siteConfig.description,
-  keywords: [
-    "animated components",
-    "react animations",
-    "framer motion",
-    "shadcn ui",
-    "reusable UI components",
-    "animation library",
-    "frontend animations",
-    "accessible animations",
-    "react development",
-    "animation presets",
-    "interactive UI",
-    "motion design",
-    "component library",
-    "frontend best practices",
-    "accessible UI animations",
-  ],
+  keywords: [],
   authors: [
     {
       name: "SinghAstra",
@@ -45,7 +28,7 @@ export const metadata: Metadata = {
     siteName: siteConfig.name,
     images: [
       {
-        url: "/api/og",
+        url: "/assets/landing.png",
         width: 1200,
         height: 630,
       },
@@ -55,7 +38,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: siteConfig.name,
     description: siteConfig.description,
-    images: ["/api/og"],
+    images: ["/assets/landing.png"],
     creator: "@singhastra",
   },
   icons: {
@@ -71,11 +54,9 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className="antialiased min-h-screen bg-background">
-        <Providers>
-          <NextTopLoader color="hsl(var(--primary))" showSpinner={false} />
-          {children}
-          <Toaster />
-        </Providers>
+        <NextTopLoader color="hsl(var(--primary))" showSpinner={false} />
+        <SiteHeader />
+        {children}
       </body>
     </html>
   );
