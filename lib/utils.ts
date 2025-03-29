@@ -26,6 +26,7 @@ export const fileExtensionIconMap = {
   c: "c",
   bash: "bash",
   html: "html5",
+  json: "json",
 };
 
 export function hasSupportedExtension(name: string) {

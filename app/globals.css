@@ -128,11 +128,11 @@ pre > code {
   margin-top: 1rem;
   margin-bottom: -1rem;
   border: 1px solid hsl(var(--border));
-  letter-spacing: 0.025em;
+  letter-spacing: 0.05em;
   display: flex;
   gap: 4px;
   align-items: center;
-  padding: 0px 14px;
+  padding: 7px 14px;
   border-radius: 4px;
   background-color: hsl(var(--muted) / 0.2);
 }

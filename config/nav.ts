@@ -27,8 +27,9 @@ export const navLinks: NavLinks = {
           items: [],
         },
         {
-          title: "Installation",
-          href: "/docs/installation",
+          title: "Counter API",
+          href: "/docs/counter-api",
+          label: "Code",
           items: [],
         },
         {
