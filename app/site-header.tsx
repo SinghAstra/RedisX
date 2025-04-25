@@ -1,14 +1,14 @@
-import AnimationContainer from "@/components/global/animation-container";
+import FadeIn from "@/components/global/fade-in";
 import { buttonVariants } from "@/components/ui/button";
 import { siteConfig } from "@/config/site";
-import { GithubIcon, TwitterIcon } from "lucide-react";
+import { FaGithub, FaXTwitter } from "react-icons/fa6";
 import { MainNav } from "./main-nav";
 import { MobileNav } from "./mobile-nav";
 
 export function SiteHeader() {
   return (
     <div className="border-b border-dashed h-16 sticky top-0 z-50  bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 flex items-center px-4 ">
-      <AnimationContainer reverse className="flex items-center w-full">
+      <FadeIn delay={0.1} className="flex items-center w-full">
         <MobileNav />
         <MainNav />
 
@@ -23,7 +23,7 @@ export function SiteHeader() {
                 })}
                 target="_blank"
               >
-                <GithubIcon />
+                <FaGithub />
               </a>
               <a
                 href={siteConfig.links.twitter}
@@ -33,12 +33,12 @@ export function SiteHeader() {
                 })}
                 target="_blank"
               >
-                <TwitterIcon />
+                <FaXTwitter />
               </a>
             </div>
           </div>
         </div>
-      </AnimationContainer>
+      </FadeIn>
     </div>
   );
 }

@@ -25,12 +25,6 @@ export const navLinks: NavLinks = {
           href: "/docs",
           items: [],
         },
-        {
-          title: "Counter API",
-          href: "/docs/counter-api",
-          label: "Code",
-          items: [],
-        },
       ],
     },
   ],
